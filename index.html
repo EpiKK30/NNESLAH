@@ -87,6 +87,14 @@
             font-size: 1em;
         }
         
+        .stat-value.compliant {
+            color: #28a745;
+        }
+        
+        .stat-value.non-compliant {
+            color: #dc3545;
+        }
+        
         .grand-total {
             background: #f8f9fa;
             padding: 15px;
@@ -186,6 +194,31 @@
             border-color: #2a5298;
         }
         
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+        
+        .filter-tab {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .filter-tab.active {
+            background: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+        
         .members-section {
             background: #f8f9fa;
             padding: 15px;
@@ -263,20 +296,20 @@
         .badge-marine { background: #20c997; }
         .badge-customs { background: #e83e8c; }
         
-        .status-badge {
+        .compliance-badge {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 4px 10px;
             border-radius: 12px;
             font-size: 0.8em;
             font-weight: 600;
         }
         
-        .status-active {
+        .compliance-compliant {
             background: #d4edda;
             color: #155724;
         }
         
-        .status-inactive {
+        .compliance-non-compliant {
             background: #f8d7da;
             color: #721c24;
         }
@@ -344,6 +377,27 @@
             color: #dc3545;
         }
         
+        .total-paid-section {
+            background: #e7f3ff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            text-align: center;
+        }
+        
+        .total-paid-label {
+            color: #495057;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .total-paid-value {
+            color: #2a5298;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        
         .footer {
             text-align: center;
             padding: 20px 15px;
@@ -396,12 +450,12 @@
                 <span class="stat-value" id="totalMembers">0</span>
             </div>
             <div class="stat-row">
-                <span class="stat-label">Active Members</span>
-                <span class="stat-value" id="activeMembers">0</span>
+                <span class="stat-label">Compliant Members</span>
+                <span class="stat-value compliant" id="compliantMembers">0</span>
             </div>
             <div class="stat-row">
-                <span class="stat-label">Inactive Members</span>
-                <span class="stat-value" id="inactiveMembers">0</span>
+                <span class="stat-label">Non-Compliant Members</span>
+                <span class="stat-value non-compliant" id="nonCompliantMembers">0</span>
             </div>
             
             <div class="grand-total">
@@ -462,6 +516,11 @@
         
         <div class="search-container">
             <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search by name, rank, branch, region...">
+            <div class="filter-tabs">
+                <div class="filter-tab active" data-filter="all">All Members</div>
+                <div class="filter-tab" data-filter="compliant">Compliant Only</div>
+                <div class="filter-tab" data-filter="non-compliant">Non-Compliant Only</div>
+            </div>
         </div>
         
         <div class="members-section">
@@ -483,35 +542,6 @@
         const data = {
   "members": [
     {
-      "id": "GRAND\nTOTALS:",
-      "surname": "",
-      "given_name": "",
-      "middle_name": "",
-      "full_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "",
-      "phone": "",
-      "work_region": "",
-      "binka_quarter": "",
-      "status": "",
-      "notes": "",
-      "payments": {
-        "2023": {
-          "annual_contribution": null,
-          "aid_fund": null
-        },
-        "2024": {
-          "annual_contribution": null,
-          "aid_fund": null
-        },
-        "2026": {
-          "annual_contribution": null,
-          "aid_fund": null
-        }
-      }
-    },
-    {
       "id": 32,
       "surname": "Manu",
       "given_name": "Adamu",
@@ -523,7 +553,8 @@
       "phone": 693118497,
       "work_region": "Far North",
       "binka_quarter": "Mbaka",
-      "status": "Inactive 2024",
+      "compliance": "Non-compliant: Reg 2024, Reg 2026",
+      "total_paid": 1200,
       "notes": "",
       "payments": {
         "2023": {
@@ -552,7 +583,8 @@
       "phone": "237 6 75325885",
       "work_region": "Centre",
       "binka_quarter": "Ngwimeng",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 18200,
       "notes": "Promoted AC\u2192LT",
       "payments": {
         "2023": {
@@ -581,7 +613,8 @@
       "phone": "237 6 74700137",
       "work_region": "Far North",
       "binka_quarter": "Bomberr",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 7100,
       "notes": "",
       "payments": {
         "2023": {
@@ -610,7 +643,8 @@
       "phone": "",
       "work_region": "Ngaoundere",
       "binka_quarter": "Mbionwa",
-      "status": "New 2024",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 8100,
       "notes": "DUPLICATE in 2024 Reg (#16, #28)",
       "payments": {
         "2023": {
@@ -639,7 +673,8 @@
       "phone": "",
       "work_region": "Gmi 6th District Bamenda",
       "binka_quarter": "Mbitfu",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 2100,
       "notes": "",
       "payments": {
         "2023": {
@@ -668,7 +703,8 @@
       "phone": "237 6 77341454",
       "work_region": "South",
       "binka_quarter": "Ngwimeng",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 18200,
       "notes": "",
       "payments": {
         "2023": {
@@ -697,7 +733,8 @@
       "phone": "237 6 72008710",
       "work_region": "Littoral",
       "binka_quarter": "Ngwimeng",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 12200,
       "notes": "",
       "payments": {
         "2023": {
@@ -726,7 +763,8 @@
       "phone": "",
       "work_region": "Bertoua 12eme",
       "binka_quarter": "Ntuntor",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 2100,
       "notes": "",
       "payments": {
         "2023": {
@@ -755,7 +793,8 @@
       "phone": "",
       "work_region": "North West",
       "binka_quarter": "Ngwemeng",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 7150,
       "notes": "",
       "payments": {
         "2023": {
@@ -784,7 +823,8 @@
       "phone": "237 6 75955508",
       "work_region": "Littoral",
       "binka_quarter": "Bomberr",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 8150,
       "notes": "GPP ERNESTINE in 2026",
       "payments": {
         "2023": {
@@ -813,7 +853,8 @@
       "phone": "",
       "work_region": "Douala",
       "binka_quarter": "Mbinkon",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 7150,
       "notes": "",
       "payments": {
         "2023": {
@@ -842,7 +883,8 @@
       "phone": "",
       "work_region": "Santchou",
       "binka_quarter": "Mbakam",
-      "status": "Inactive 2024",
+      "compliance": "Non-compliant: Reg 2024, Reg 2026",
+      "total_paid": 1100,
       "notes": "",
       "payments": {
         "2023": {
@@ -871,7 +913,8 @@
       "phone": "",
       "work_region": "Limbe",
       "binka_quarter": "Mbakam",
-      "status": "Inactive 2024",
+      "compliance": "Non-compliant: Reg 2024, Reg 2026",
+      "total_paid": 1200,
       "notes": "Was GPX2 in dataset 1",
       "payments": {
         "2023": {
@@ -900,7 +943,8 @@
       "phone": "1 (202) 817 4966",
       "work_region": "Diaspora",
       "binka_quarter": "Ngwimeng",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 17500,
       "notes": "",
       "payments": {
         "2023": {
@@ -929,7 +973,8 @@
       "phone": "",
       "work_region": "Muyuka",
       "binka_quarter": "Ntuntoh",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 2100,
       "notes": "",
       "payments": {
         "2023": {
@@ -958,7 +1003,8 @@
       "phone": "1 (910) 554 5916",
       "work_region": "Diaspora",
       "binka_quarter": "Bomberr",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 18300,
       "notes": "",
       "payments": {
         "2023": {
@@ -987,7 +1033,8 @@
       "phone": "237 6 675615753",
       "work_region": "Centre",
       "binka_quarter": "Ngwimeng",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 17100,
       "notes": "Rank variation ADJT/AT",
       "payments": {
         "2023": {
@@ -1016,7 +1063,8 @@
       "phone": "237 6 90929133",
       "work_region": "Centre",
       "binka_quarter": "Nboefi",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 13100,
       "notes": "",
       "payments": {
         "2023": {
@@ -1045,7 +1093,8 @@
       "phone": "237 6 53053873",
       "work_region": "Littoral",
       "binka_quarter": "Bomba",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 23200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1074,7 +1123,8 @@
       "phone": "",
       "work_region": "Bafoussam",
       "binka_quarter": "Dingding",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 17100,
       "notes": "Spelling variation",
       "payments": {
         "2023": {
@@ -1103,7 +1153,8 @@
       "phone": "",
       "work_region": "International Airport Dla",
       "binka_quarter": "Mbinkong",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 2100,
       "notes": "",
       "payments": {
         "2023": {
@@ -1132,7 +1183,8 @@
       "phone": "",
       "work_region": "Centre",
       "binka_quarter": "Ngwemeng-bonchfu",
-      "status": "Inactive 2024",
+      "compliance": "Non-compliant: Reg 2024, Reg 2026",
+      "total_paid": 1200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1161,7 +1213,8 @@
       "phone": "237 6 77790075",
       "work_region": "Northwest",
       "binka_quarter": "Mbakah",
-      "status": "New 2024",
+      "compliance": "Non-compliant: Reg 2023, Reg 2026",
+      "total_paid": 6000,
       "notes": "Different from Chfubi",
       "payments": {
         "2023": {
@@ -1190,7 +1243,8 @@
       "phone": "",
       "work_region": "Dla_mboppi",
       "binka_quarter": "Tfu-tfu Ngwemeng",
-      "status": "No Payment Record",
+      "compliance": "Non-compliant: Reg 2023, Reg 2024, Reg 2026",
+      "total_paid": 0,
       "notes": "",
       "payments": {
         "2023": {
@@ -1219,7 +1273,8 @@
       "phone": "",
       "work_region": "Melong",
       "binka_quarter": "Bonjela",
-      "status": "Inactive 2024",
+      "compliance": "Non-compliant: Reg 2024, Reg 2026",
+      "total_paid": 1200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1248,7 +1303,8 @@
       "phone": "",
       "work_region": "Centre",
       "binka_quarter": "Ngwemeng",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 2100,
       "notes": "",
       "payments": {
         "2023": {
@@ -1277,7 +1333,8 @@
       "phone": "",
       "work_region": "Dla-b'beri",
       "binka_quarter": "Ngwemen-tfutfu",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 7200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1306,7 +1363,8 @@
       "phone": "",
       "work_region": "Rasa Edea",
       "binka_quarter": "Ngotang",
-      "status": "No Payment Record",
+      "compliance": "Non-compliant: Reg 2023, Reg 2024, Reg 2026",
+      "total_paid": 0,
       "notes": "",
       "payments": {
         "2023": {
@@ -1335,7 +1393,8 @@
       "phone": "",
       "work_region": "Ciap Mutengene (student)",
       "binka_quarter": "Mbitfu",
-      "status": "Inactive 2024",
+      "compliance": "Non-compliant: Reg 2024, Reg 2026",
+      "total_paid": 1100,
       "notes": "",
       "payments": {
         "2023": {
@@ -1364,7 +1423,8 @@
       "phone": "",
       "work_region": "Bafoussam",
       "binka_quarter": "Ngwemeng-tfutfu",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 7200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1393,7 +1453,8 @@
       "phone": "237 6 70111717",
       "work_region": "West",
       "binka_quarter": "Nwamba",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 8100,
       "notes": "DUPLICATE in 2024 Reg (#13, #23)",
       "payments": {
         "2023": {
@@ -1422,7 +1483,8 @@
       "phone": "237 6 77632156",
       "work_region": "Adamawa",
       "binka_quarter": "Ntontoh",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 7100,
       "notes": "",
       "payments": {
         "2023": {
@@ -1451,7 +1513,8 @@
       "phone": "",
       "work_region": "Btap Koutaba",
       "binka_quarter": "Mbonti",
-      "status": "No Payment Record",
+      "compliance": "Non-compliant: Reg 2023, Reg 2024, Reg 2026",
+      "total_paid": 0,
       "notes": "",
       "payments": {
         "2023": {
@@ -1480,7 +1543,8 @@
       "phone": "237 6 77002379",
       "work_region": "Northwest",
       "binka_quarter": "Chumbi",
-      "status": "Active",
+      "compliance": "Compliant",
+      "total_paid": 18200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1509,7 +1573,8 @@
       "phone": "",
       "work_region": "Kousseri",
       "binka_quarter": "Mbakam",
-      "status": "Active",
+      "compliance": "Non-compliant: Reg 2026",
+      "total_paid": 2200,
       "notes": "",
       "payments": {
         "2023": {
@@ -1528,9 +1593,9 @@
     }
   ],
   "summary": {
-    "total_members": 36,
-    "active_count": 24,
-    "inactive_count": 6,
+    "total_members": 35,
+    "compliant_count": 7,
+    "non_compliant_count": 28,
     "totals": {
       "2023": {
         "annual_contribution": 35350,
@@ -1561,6 +1626,8 @@
     }
   }
 };
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
         
         function formatCurrency(amount) {
             if (!amount) return '-';
@@ -1573,11 +1640,10 @@
             return `<span class="branch-badge ${badgeClass}">${branch}</span>`;
         }
         
-        function getStatusBadge(status) {
-            if (!status) return '<span class="status-badge status-inactive">Unknown</span>';
-            const isActive = status.includes('Active');
-            const badgeClass = isActive ? 'status-active' : 'status-inactive';
-            return `<span class="status-badge ${badgeClass}">${status}</span>`;
+        function getComplianceBadge(compliance) {
+            const isCompliant = compliance === "Compliant";
+            const badgeClass = isCompliant ? 'compliance-compliant' : 'compliance-non-compliant';
+            return `<span class="compliance-badge ${badgeClass}">${compliance}</span>`;
         }
         
         function renderSummary() {
@@ -1585,8 +1651,8 @@
             
             // Update member counts
             document.getElementById('totalMembers').textContent = summary.total_members;
-            document.getElementById('activeMembers').textContent = summary.active_count;
-            document.getElementById('inactiveMembers').textContent = summary.inactive_count;
+            document.getElementById('compliantMembers').textContent = summary.compliant_count;
+            document.getElementById('nonCompliantMembers').textContent = summary.non_compliant_count;
             
             // Calculate grand total
             let grandTotal = 0;
@@ -1654,7 +1720,7 @@
             }
             
             return `
-                <div class="member-card" data-search="${member.full_name.toLowerCase()} ${member.rank_abbr.toLowerCase()} ${member.branch.toLowerCase()} ${member.work_region.toLowerCase()}">
+                <div class="member-card" data-compliance="${member.compliance}">
                     <div class="member-header">
                         <div class="member-name">${member.full_name}</div>
                         <div class="member-rank">${rankDisplay}</div>
@@ -1674,8 +1740,8 @@
                             <span class="detail-value">${member.binka_quarter || '-'}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">Status:</span>
-                            <span class="detail-value">${getStatusBadge(member.status)}</span>
+                            <span class="detail-label">Compliance:</span>
+                            <span class="detail-value">${getComplianceBadge(member.compliance)}</span>
                         </div>
                     </div>
                     
@@ -1683,15 +1749,42 @@
                         <div class="payments-title">💰 Payments by Year</div>
                         ${paymentsHTML}
                     </div>
+                    
+                    <div class="total-paid-section">
+                        <div class="total-paid-label">Total Paid</div>
+                        <div class="total-paid-value">${formatCurrency(member.total_paid)}</div>
+                    </div>
                 </div>
             `;
         }
         
-        function renderMembers(members) {
+        function filterMembers(members) {
+            let filtered = members;
+            
+            // Apply compliance filter
+            if (currentFilter === 'compliant') {
+                filtered = filtered.filter(m => m.compliance === 'Compliant');
+            } else if (currentFilter === 'non-compliant') {
+                filtered = filtered.filter(m => m.compliance !== 'Compliant');
+            }
+            
+            // Apply search filter
+            if (currentSearchTerm) {
+                filtered = filtered.filter(member => {
+                    const searchText = `${member.full_name} ${member.rank_abbr} ${member.branch} ${member.work_region} ${member.binka_quarter}`.toLowerCase();
+                    return searchText.includes(currentSearchTerm);
+                });
+            }
+            
+            return filtered;
+        }
+        
+        function renderMembers() {
+            const filtered = filterMembers(data.members);
             const membersList = document.getElementById('membersList');
             const noResults = document.getElementById('noResults');
             
-            if (members.length === 0) {
+            if (filtered.length === 0) {
                 membersList.innerHTML = '';
                 noResults.style.display = 'block';
                 document.getElementById('memberCount').textContent = '0';
@@ -1699,30 +1792,29 @@
             }
             
             noResults.style.display = 'none';
-            membersList.innerHTML = members.map(m => renderMemberCard(m)).join('');
-            document.getElementById('memberCount').textContent = members.length;
+            membersList.innerHTML = filtered.map(m => renderMemberCard(m)).join('');
+            document.getElementById('memberCount').textContent = filtered.length;
         }
         
         // Search functionality
         document.getElementById('searchBox').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            
-            if (!searchTerm) {
-                renderMembers(data.members);
-                return;
-            }
-            
-            const filteredMembers = data.members.filter(member => {
-                const searchText = `${member.full_name} ${member.rank_abbr} ${member.branch} ${member.work_region} ${member.binka_quarter}`.toLowerCase();
-                return searchText.includes(searchTerm);
+            currentSearchTerm = e.target.value.toLowerCase();
+            renderMembers();
+        });
+        
+        // Filter tabs functionality
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderMembers();
             });
-            
-            renderMembers(filteredMembers);
         });
         
         // Initialize
         renderSummary();
-        renderMembers(data.members);
+        renderMembers();
     </script>
 </body>
 </html>
