@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NNESLÄH - Binka Military Professionals Group Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>NNESLÄH - Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -12,134 +12,241 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
-            padding: 20px;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
         }
         
         .header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 40px;
+            padding: 30px 20px;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 1.6em;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
         
         .header .subtitle {
-            font-size: 1.4em;
-            margin-bottom: 15px;
+            font-size: 1em;
+            margin-bottom: 10px;
             font-weight: 500;
         }
         
         .header .motto {
-            font-size: 1.1em;
+            font-size: 0.85em;
             opacity: 0.95;
             font-style: italic;
-            margin-top: 10px;
-            padding: 15px;
+            padding: 10px;
             background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            border-left: 4px solid #ffd700;
+            border-radius: 8px;
+            border-left: 3px solid #ffd700;
+            margin-top: 8px;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 40px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 20px;
             background: #f8f9fa;
         }
         
         .stat-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
         }
         
         .stat-card h3 {
             color: #6c757d;
-            font-size: 0.9em;
+            font-size: 0.75em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
         
         .stat-value {
-            font-size: 2.5em;
+            font-size: 1.8em;
             font-weight: bold;
             color: #2a5298;
+            line-height: 1.2;
         }
         
         .stat-label {
             color: #6c757d;
-            margin-top: 5px;
-            font-size: 0.9em;
+            margin-top: 4px;
+            font-size: 0.75em;
         }
         
         .section {
-            padding: 40px;
+            padding: 20px;
         }
         
         .section-title {
-            font-size: 1.8em;
+            font-size: 1.3em;
             color: #2a5298;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #2a5298;
-            padding-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #2a5298;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            font-size: 1em;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+        
+        /* Desktop Table View */
         .table-container {
             overflow-x: auto;
-            margin-top: 20px;
+            -webkit-overflow-scrolling: touch;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            min-width: 800px;
         }
         
         th {
             background: #2a5298;
             color: white;
-            padding: 15px;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
             position: sticky;
             top: 0;
             z-index: 10;
+            font-size: 0.85em;
         }
         
         td {
-            padding: 12px 15px;
+            padding: 10px 8px;
             border-bottom: 1px solid #dee2e6;
         }
         
         tr:hover {
             background: #f8f9fa;
+        }
+        
+        /* Mobile Card View */
+        .mobile-cards {
+            display: none;
+        }
+        
+        .member-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .member-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .member-name {
+            font-size: 1.05em;
+            font-weight: bold;
+            color: #2a5298;
+            flex: 1;
+        }
+        
+        .member-id {
+            background: #e9ecef;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .member-info {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+        }
+        
+        .info-label {
+            color: #6c757d;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            font-size: 0.9em;
+            text-align: right;
+        }
+        
+        .payments-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .payment-item {
+            text-align: center;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .payment-year {
+            font-size: 0.7em;
+            color: #6c757d;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .payment-amount {
+            font-size: 0.9em;
+            font-weight: bold;
         }
         
         .payment-cell {
@@ -155,19 +262,11 @@
             color: #dc3545;
         }
         
-        .chart-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
         .branch-badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 12px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 600;
         }
         
@@ -181,42 +280,120 @@
         .status-active { color: #28a745; font-weight: 600; }
         .status-inactive { color: #dc3545; font-weight: 600; }
         
-        .search-box {
+        .summary-table {
             width: 100%;
-            padding: 15px;
-            font-size: 1em;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         
-        .search-box:focus {
-            outline: none;
-            border-color: #2a5298;
+        .summary-table table {
+            min-width: 100%;
         }
         
         .footer {
             text-align: center;
-            padding: 30px;
+            padding: 25px 20px;
             background: #2a5298;
             color: white;
         }
         
-        @media print {
-            body {
-                background: white;
+        .footer p {
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.3em;
             }
-            .container {
-                box-shadow: none;
+            
+            .header .subtitle {
+                font-size: 0.9em;
+            }
+            
+            .header .motto {
+                font-size: 0.75em;
+            }
+            
+            .stats-grid {
+                padding: 15px;
+                gap: 10px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-value {
+                font-size: 1.5em;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .section-title {
+                font-size: 1.1em;
+            }
+            
+            /* Hide table, show cards on mobile */
+            .table-container {
+                display: none;
+            }
+            
+            .mobile-cards {
+                display: block;
+            }
+            
+            /* Make summary table scrollable */
+            .summary-table {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .summary-table table {
+                font-size: 0.8em;
+            }
+            
+            .summary-table th,
+            .summary-table td {
+                padding: 8px 6px;
             }
         }
         
-        @media (max-width: 768px) {
-            .header h1 {
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-value {
                 font-size: 1.8em;
             }
-            .header .subtitle {
-                font-size: 1.1em;
+            
+            .payments-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Desktop optimizations */
+        @media (min-width: 769px) {
+            .container {
+                border-radius: 20px;
+                margin: 20px auto;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            }
+            
+            .header {
+                border-radius: 20px 20px 0 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 40px;
             }
         }
     </style>
@@ -227,58 +404,57 @@
             <h1>🎖️ NGAM NTA'A E SIRR LÄH (NNESLÄH)</h1>
             <div class="subtitle">Binka Military Professionals Group</div>
             <div class="motto">"BO'O NGAM NTA'A E SIRR LÀH KI BIMI Nkerbu KÀH"</div>
-            <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.9;">Financial Dashboard & Member Registry</p>
         </div>
         
         <div class="stats-grid">
             <div class="stat-card">
-                <h3>Total Members</h3>
+                <h3>Members</h3>
                 <div class="stat-value" id="totalMembers">0</div>
-                <div class="stat-label">Registered</div>
+                <div class="stat-label">Total</div>
             </div>
             
             <div class="stat-card">
-                <h3>Active Members</h3>
+                <h3>Active</h3>
                 <div class="stat-value" id="activeMembers">0</div>
-                <div class="stat-label">Currently Active</div>
+                <div class="stat-label">Members</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card" style="grid-column: span 2;">
                 <h3>Grand Total</h3>
                 <div class="stat-value" id="grandTotal">0</div>
                 <div class="stat-label">FCFA Collected</div>
             </div>
             
             <div class="stat-card">
-                <h3>2023 Total</h3>
+                <h3>2023</h3>
                 <div class="stat-value" id="total2023">0</div>
                 <div class="stat-label">FCFA</div>
             </div>
             
             <div class="stat-card">
-                <h3>2024 Total</h3>
+                <h3>2024</h3>
                 <div class="stat-value" id="total2024">0</div>
-                <div class="stat-label">FCFA (Reg + AID)</div>
+                <div class="stat-label">FCFA</div>
             </div>
             
             <div class="stat-card">
-                <h3>2026 Total</h3>
+                <h3>2026</h3>
                 <div class="stat-value" id="total2026">0</div>
-                <div class="stat-label">FCFA (Reg + AID)</div>
+                <div class="stat-label">FCFA</div>
             </div>
         </div>
         
         <div class="section">
-            <h2 class="section-title">📊 Payment Summary by Year</h2>
-            <div class="chart-container">
+            <h2 class="section-title">📊 Payment Summary</h2>
+            <div class="summary-table">
                 <table>
                     <thead>
                         <tr>
                             <th>Year</th>
                             <th>Registration</th>
                             <th>AID Fund</th>
-                            <th>Members Paid</th>
-                            <th>Total Collected</th>
+                            <th>Members</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -309,10 +485,11 @@
         </div>
         
         <div class="section" style="background: #f8f9fa;">
-            <h2 class="section-title">👥 Complete Member Registry</h2>
-            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search members by name, rank, branch, or location...">
+            <h2 class="section-title">👥 Member Registry</h2>
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search by name, rank, branch...">
             
-            <div class="table-container">
+            <!-- Desktop Table View -->
+            <div class="table-container" id="desktopView">
                 <table id="memberTable">
                     <thead>
                         <tr>
@@ -320,13 +497,10 @@
                             <th>Name</th>
                             <th>Rank</th>
                             <th>Branch</th>
-                            <th>Work Region</th>
-                            <th>Binka Quarter</th>
+                            <th>Region</th>
                             <th>2023</th>
-                            <th>2024 Reg</th>
-                            <th>2024 AID</th>
-                            <th>2026 Reg</th>
-                            <th>2026 AID</th>
+                            <th>2024</th>
+                            <th>2026</th>
                             <th>Total</th>
                             <th>Status</th>
                         </tr>
@@ -335,17 +509,20 @@
                     </tbody>
                 </table>
             </div>
+            
+            <!-- Mobile Card View -->
+            <div class="mobile-cards" id="mobileView">
+            </div>
         </div>
         
         <div class="footer">
             <p><strong>NGAM NTA'A E SIRR LÄH (NNESLÄH)</strong></p>
-            <p style="margin-top: 10px; font-size: 0.9em;">Binka Military Professionals Group</p>
-            <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.8;">Last Updated: <span id="lastUpdated"></span></p>
+            <p style="margin-top: 8px;">Binka Military Professionals Group</p>
+            <p style="margin-top: 8px; font-size: 0.8em; opacity: 0.9;">Updated: <span id="lastUpdated"></span></p>
         </div>
     </div>
     
     <script>
-        // Data will be embedded here
         const data = {
   "members": [
     {
@@ -1079,7 +1256,7 @@
     "total_2024_aid": 90000,
     "total_2026_reg": 7700,
     "total_2026_aid": 105000,
-    "grand_total": 7000,
+    "grand_total": 266050,
     "branches": {
       "Police": 8,
       "Gendarmerie": 3,
@@ -1098,19 +1275,23 @@
 };
         
         function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-US').format(Math.round(amount)) + ' FCFA';
+            if (amount === 0) return '-';
+            return new Intl.NumberFormat('en-US').format(Math.round(amount));
+        }
+        
+        function formatCurrencyFull(amount) {
+            return formatCurrency(amount) + ' FCFA';
         }
         
         function getBranchBadge(branch) {
-            if (!branch) return '';
-            const badgeClass = `badge-${branch.toLowerCase()}`;
+            if (!branch || branch.trim() === '') return '<span class="branch-badge">N/A</span>';
+            const badgeClass = `badge-${branch.toLowerCase().trim()}`;
             return `<span class="branch-badge ${badgeClass}">${branch}</span>`;
         }
         
         function renderDashboard() {
             const summary = data.summary;
             
-            // Update stats cards
             document.getElementById('totalMembers').textContent = summary.total_members;
             document.getElementById('activeMembers').textContent = summary.active_count;
             
@@ -1122,41 +1303,44 @@
             document.getElementById('total2024').textContent = formatCurrency(summary.total_2024_reg + summary.total_2024_aid);
             document.getElementById('total2026').textContent = formatCurrency(summary.total_2026_reg + summary.total_2026_aid);
             
-            // Update payment summary table
             document.getElementById('reg2023').textContent = formatCurrency(summary.total_2023);
             document.getElementById('reg2024').textContent = formatCurrency(summary.total_2024_reg);
             document.getElementById('aid2024').textContent = formatCurrency(summary.total_2024_aid);
             document.getElementById('reg2026').textContent = formatCurrency(summary.total_2026_reg);
             document.getElementById('aid2026').textContent = formatCurrency(summary.total_2026_aid);
             
-            document.getElementById('paid2023').textContent = `${summary.paid_2023} members`;
-            document.getElementById('paid2024').textContent = `${summary.paid_2024_reg} Reg / ${summary.paid_2024_aid} AID`;
-            document.getElementById('paid2026').textContent = `${summary.paid_2026_reg} Reg / ${summary.paid_2026_aid} AID`;
+            document.getElementById('paid2023').textContent = `${summary.paid_2023}`;
+            document.getElementById('paid2024').textContent = `${summary.paid_2024_reg}/${summary.paid_2024_aid}`;
+            document.getElementById('paid2026').textContent = `${summary.paid_2026_reg}/${summary.paid_2026_aid}`;
             
             document.getElementById('total2023Detail').textContent = formatCurrency(summary.total_2023);
             document.getElementById('total2024Detail').textContent = formatCurrency(summary.total_2024_reg + summary.total_2024_aid);
             document.getElementById('total2026Detail').textContent = formatCurrency(summary.total_2026_reg + summary.total_2026_aid);
             
-            // Set last updated date
             document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
-                month: 'long',
+                month: 'short',
                 day: 'numeric'
             });
             
-            // Render member table
-            renderMemberTable(data.members);
+            renderMembers(data.members);
         }
         
-        function renderMemberTable(members) {
+        function renderMembers(members) {
+            renderDesktopTable(members);
+            renderMobileCards(members);
+        }
+        
+        function renderDesktopTable(members) {
             const tbody = document.getElementById('memberTableBody');
             tbody.innerHTML = '';
             
             members.forEach(member => {
                 const fullName = `${member.given_name} ${member.middle_name} ${member.surname}`.trim().replace(/\s+/g, ' ');
                 const statusClass = member.status.includes('Active') ? 'status-active' : 'status-inactive';
-                
-                const memberTotal = member.r2023 + member.r2024 + member.a2024 + member.r2026 + member.a2026;
+                const total2024 = member.r2024 + member.a2024;
+                const total2026 = member.r2026 + member.a2026;
+                const memberTotal = member.r2023 + total2024 + total2026;
                 
                 const row = `
                     <tr>
@@ -1165,13 +1349,10 @@
                         <td>${member.rank_abbr}</td>
                         <td>${getBranchBadge(member.branch)}</td>
                         <td>${member.work_region}</td>
-                        <td>${member.binka_quarter}</td>
-                        <td class="payment-cell ${member.r2023 > 0 ? 'payment-yes' : 'payment-no'}">${member.r2023 > 0 ? Math.round(member.r2023).toLocaleString() : '-'}</td>
-                        <td class="payment-cell ${member.r2024 > 0 ? 'payment-yes' : 'payment-no'}">${member.r2024 > 0 ? Math.round(member.r2024).toLocaleString() : '-'}</td>
-                        <td class="payment-cell ${member.a2024 > 0 ? 'payment-yes' : 'payment-no'}">${member.a2024 > 0 ? Math.round(member.a2024).toLocaleString() : '-'}</td>
-                        <td class="payment-cell ${member.r2026 > 0 ? 'payment-yes' : 'payment-no'}">${member.r2026 > 0 ? Math.round(member.r2026).toLocaleString() : '-'}</td>
-                        <td class="payment-cell ${member.a2026 > 0 ? 'payment-yes' : 'payment-no'}">${member.a2026 > 0 ? Math.round(member.a2026).toLocaleString() : '-'}</td>
-                        <td class="payment-cell"><strong>${Math.round(memberTotal).toLocaleString()}</strong></td>
+                        <td class="payment-cell ${member.r2023 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(member.r2023)}</td>
+                        <td class="payment-cell ${total2024 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2024)}</td>
+                        <td class="payment-cell ${total2026 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2026)}</td>
+                        <td class="payment-cell"><strong>${formatCurrency(memberTotal)}</strong></td>
                         <td class="${statusClass}">${member.status}</td>
                     </tr>
                 `;
@@ -1179,7 +1360,72 @@
             });
         }
         
-        // Search functionality
+        function renderMobileCards(members) {
+            const container = document.getElementById('mobileView');
+            container.innerHTML = '';
+            
+            members.forEach(member => {
+                const fullName = `${member.given_name} ${member.middle_name} ${member.surname}`.trim().replace(/\s+/g, ' ');
+                const statusClass = member.status.includes('Active') ? 'status-active' : 'status-inactive';
+                const total2024 = member.r2024 + member.a2024;
+                const total2026 = member.r2026 + member.a2026;
+                const memberTotal = member.r2023 + total2024 + total2026;
+                
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.innerHTML = `
+                    <div class="member-card-header">
+                        <div class="member-name">${fullName}</div>
+                        <div class="member-id">#${member.id}</div>
+                    </div>
+                    
+                    <div class="member-info">
+                        <div class="info-row">
+                            <span class="info-label">Rank:</span>
+                            <span class="info-value">${member.rank_abbr}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Branch:</span>
+                            <span class="info-value">${getBranchBadge(member.branch)}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Region:</span>
+                            <span class="info-value">${member.work_region}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Village:</span>
+                            <span class="info-value">${member.binka_quarter}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Status:</span>
+                            <span class="info-value ${statusClass}">${member.status}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="payments-grid">
+                        <div class="payment-item">
+                            <div class="payment-year">2023</div>
+                            <div class="payment-amount ${member.r2023 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(member.r2023)}</div>
+                        </div>
+                        <div class="payment-item">
+                            <div class="payment-year">2024</div>
+                            <div class="payment-amount ${total2024 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2024)}</div>
+                        </div>
+                        <div class="payment-item">
+                            <div class="payment-year">2026</div>
+                            <div class="payment-amount ${total2026 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2026)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-row" style="margin-top: 12px; padding-top: 12px; border-top: 2px solid #f0f0f0;">
+                        <span class="info-label" style="font-weight: 700; color: #2a5298;">TOTAL:</span>
+                        <span class="info-value" style="font-size: 1.1em; font-weight: 700; color: #2a5298;">${formatCurrency(memberTotal)} FCFA</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
         document.getElementById('searchBox').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const filteredMembers = data.members.filter(member => {
@@ -1190,10 +1436,9 @@
                        member.work_region.toLowerCase().includes(searchTerm) ||
                        member.binka_quarter.toLowerCase().includes(searchTerm);
             });
-            renderMemberTable(filteredMembers);
+            renderMembers(filteredMembers);
         });
         
-        // Initialize dashboard
         renderDashboard();
     </script>
 </body>
