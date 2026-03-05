@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>NNESLÄH - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NNESLÄH - Binka Military Professionals Group</title>
     <style>
         * {
             margin: 0;
@@ -15,33 +15,34 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
+            padding: 0;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
-            background: white;
         }
         
         .header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 30px 20px;
+            padding: 20px 15px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
         .header h1 {
-            font-size: 1.6em;
+            font-size: 1.3em;
             margin-bottom: 8px;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         .header .subtitle {
-            font-size: 1em;
+            font-size: 0.95em;
             margin-bottom: 10px;
             font-weight: 500;
         }
@@ -57,201 +58,282 @@
             margin-top: 8px;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 20px;
-            background: #f8f9fa;
-        }
-        
-        .stat-card {
+        .stats-summary {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
+            padding: 15px;
+            margin: 0;
         }
         
-        .stat-card h3 {
-            color: #6c757d;
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
         }
         
-        .stat-value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #2a5298;
-            line-height: 1.2;
+        .stat-row:last-child {
+            border-bottom: none;
         }
         
         .stat-label {
             color: #6c757d;
-            margin-top: 4px;
-            font-size: 0.75em;
+            font-size: 0.9em;
+            font-weight: 500;
         }
         
-        .section {
-            padding: 20px;
-        }
-        
-        .section-title {
-            font-size: 1.3em;
+        .stat-value {
             color: #2a5298;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #2a5298;
+            font-weight: 700;
+            font-size: 1em;
+        }
+        
+        .grand-total {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .grand-total-label {
+            color: #6c757d;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .grand-total-value {
+            color: #2a5298;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        
+        .year-breakdown {
+            background: white;
+            padding: 15px;
+            margin-top: 1px;
+        }
+        
+        .year-section {
+            margin-bottom: 20px;
+        }
+        
+        .year-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .year-title {
+            color: #2a5298;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 10px;
             padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            border-bottom: 2px solid #2a5298;
+        }
+        
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .payment-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .payment-item-label {
+            color: #6c757d;
+            font-size: 0.8em;
+            margin-bottom: 5px;
+        }
+        
+        .payment-item-value {
+            color: #2a5298;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+        
+        .payment-item-count {
+            color: #6c757d;
+            font-size: 0.75em;
+            margin-top: 3px;
+        }
+        
+        .search-container {
+            background: white;
+            padding: 15px;
+            margin-top: 1px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .search-box {
             width: 100%;
-            padding: 15px;
+            padding: 12px 15px;
             font-size: 1em;
             border: 2px solid #dee2e6;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            outline: none;
         }
         
         .search-box:focus {
-            outline: none;
             border-color: #2a5298;
         }
         
-        /* Desktop Table View */
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85em;
-            min-width: 800px;
-        }
-        
-        th {
-            background: #2a5298;
-            color: white;
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            font-size: 0.85em;
-        }
-        
-        td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        tr:hover {
+        .members-section {
             background: #f8f9fa;
+            padding: 15px;
         }
         
-        /* Mobile Card View */
-        .mobile-cards {
-            display: none;
+        .section-title {
+            color: #2a5298;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
         }
         
         .member-card {
             background: white;
-            border: 1px solid #dee2e6;
             border-radius: 12px;
             padding: 15px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        .member-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        .member-header {
             margin-bottom: 12px;
             padding-bottom: 12px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid #f8f9fa;
         }
         
         .member-name {
-            font-size: 1.05em;
-            font-weight: bold;
+            font-size: 1.1em;
+            font-weight: 700;
             color: #2a5298;
-            flex: 1;
+            margin-bottom: 5px;
         }
         
-        .member-id {
-            background: #e9ecef;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            font-weight: 600;
-            color: #495057;
+        .member-rank {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 8px;
         }
         
-        .member-info {
-            display: grid;
-            gap: 8px;
+        .member-details {
             margin-bottom: 12px;
         }
         
-        .info-row {
+        .detail-row {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
+            margin-bottom: 6px;
+            font-size: 0.9em;
         }
         
-        .info-label {
+        .detail-label {
             color: #6c757d;
-            font-size: 0.85em;
+            min-width: 110px;
             font-weight: 500;
         }
         
-        .info-value {
+        .detail-value {
+            color: #333;
+            flex: 1;
+        }
+        
+        .branch-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
             font-weight: 600;
-            font-size: 0.9em;
-            text-align: right;
+            color: white;
         }
         
-        .payments-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #f0f0f0;
+        .badge-army { background: #28a745; }
+        .badge-navy { background: #007bff; }
+        .badge-police { background: #6610f2; }
+        .badge-gendarmerie { background: #fd7e14; }
+        .badge-marine { background: #20c997; }
+        .badge-customs { background: #e83e8c; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
         }
         
-        .payment-item {
-            text-align: center;
-            padding: 8px;
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .payments-section {
             background: #f8f9fa;
+            padding: 12px;
             border-radius: 8px;
+            margin-top: 12px;
+        }
+        
+        .payments-title {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: #2a5298;
+            margin-bottom: 10px;
         }
         
         .payment-year {
-            font-size: 0.7em;
-            color: #6c757d;
-            text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
         }
         
-        .payment-amount {
-            font-size: 0.9em;
-            font-weight: bold;
+        .payment-year:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .payment-year-title {
+            font-size: 0.85em;
+            font-weight: 700;
+            color: #495057;
+            margin-bottom: 6px;
+        }
+        
+        .payment-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
         
         .payment-cell {
-            text-align: right;
-            font-weight: 600;
+            background: white;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        
+        .payment-cell-label {
+            font-size: 0.75em;
+            color: #6c757d;
+            margin-bottom: 3px;
+        }
+        
+        .payment-cell-value {
+            font-size: 0.9em;
+            font-weight: 700;
         }
         
         .payment-yes {
@@ -262,138 +344,40 @@
             color: #dc3545;
         }
         
-        .branch-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: 600;
-        }
-        
-        .badge-army { background: #28a745; color: white; }
-        .badge-navy { background: #007bff; color: white; }
-        .badge-police { background: #6610f2; color: white; }
-        .badge-gendarmerie { background: #fd7e14; color: white; }
-        .badge-marine { background: #20c997; color: white; }
-        .badge-customs { background: #e83e8c; color: white; }
-        
-        .status-active { color: #28a745; font-weight: 600; }
-        .status-inactive { color: #dc3545; font-weight: 600; }
-        
-        .summary-table {
-            width: 100%;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .summary-table table {
-            min-width: 100%;
-        }
-        
         .footer {
             text-align: center;
-            padding: 25px 20px;
+            padding: 20px 15px;
             background: #2a5298;
             color: white;
+            font-size: 0.85em;
         }
         
-        .footer p {
-            font-size: 0.9em;
-            margin: 5px 0;
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-size: 1.1em;
         }
         
-        /* Mobile Optimizations */
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
+            .container {
+                max-width: 800px;
+            }
+            
             .header h1 {
-                font-size: 1.3em;
+                font-size: 2em;
             }
             
             .header .subtitle {
-                font-size: 0.9em;
+                font-size: 1.2em;
             }
             
             .header .motto {
-                font-size: 0.75em;
+                font-size: 1em;
             }
             
-            .stats-grid {
-                padding: 15px;
-                gap: 10px;
-            }
-            
-            .stat-card {
-                padding: 15px;
-            }
-            
-            .stat-value {
-                font-size: 1.5em;
-            }
-            
-            .section {
-                padding: 15px;
-            }
-            
-            .section-title {
-                font-size: 1.1em;
-            }
-            
-            /* Hide table, show cards on mobile */
-            .table-container {
-                display: none;
-            }
-            
-            .mobile-cards {
-                display: block;
-            }
-            
-            /* Make summary table scrollable */
-            .summary-table {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .summary-table table {
-                font-size: 0.8em;
-            }
-            
-            .summary-table th,
-            .summary-table td {
-                padding: 8px 6px;
-            }
-        }
-        
-        /* Very small screens */
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-value {
-                font-size: 1.8em;
-            }
-            
-            .payments-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Desktop optimizations */
-        @media (min-width: 769px) {
-            .container {
-                border-radius: 20px;
-                margin: 20px auto;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            }
-            
-            .header {
-                border-radius: 20px 20px 0 0;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-                padding: 40px;
+            .stats-summary, .year-breakdown, .search-container, .members-section {
+                padding: 25px;
             }
         }
     </style>
@@ -406,119 +390,92 @@
             <div class="motto">"BO'O NGAM NTA'A E SIRR LÀH KI BIMI Nkerbu KÀH"</div>
         </div>
         
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Members</h3>
-                <div class="stat-value" id="totalMembers">0</div>
-                <div class="stat-label">Total</div>
+        <div class="stats-summary">
+            <div class="stat-row">
+                <span class="stat-label">Total Members</span>
+                <span class="stat-value" id="totalMembers">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Active Members</span>
+                <span class="stat-value" id="activeMembers">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Inactive Members</span>
+                <span class="stat-value" id="inactiveMembers">0</span>
             </div>
             
-            <div class="stat-card">
-                <h3>Active</h3>
-                <div class="stat-value" id="activeMembers">0</div>
-                <div class="stat-label">Members</div>
-            </div>
-            
-            <div class="stat-card" style="grid-column: span 2;">
-                <h3>Grand Total</h3>
-                <div class="stat-value" id="grandTotal">0</div>
-                <div class="stat-label">FCFA Collected</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3>2023</h3>
-                <div class="stat-value" id="total2023">0</div>
-                <div class="stat-label">FCFA</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3>2024</h3>
-                <div class="stat-value" id="total2024">0</div>
-                <div class="stat-label">FCFA</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3>2026</h3>
-                <div class="stat-value" id="total2026">0</div>
-                <div class="stat-label">FCFA</div>
+            <div class="grand-total">
+                <div class="grand-total-label">Total Collected</div>
+                <div class="grand-total-value" id="grandTotal">0</div>
             </div>
         </div>
         
-        <div class="section">
-            <h2 class="section-title">📊 Payment Summary</h2>
-            <div class="summary-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Year</th>
-                            <th>Registration</th>
-                            <th>AID Fund</th>
-                            <th>Members</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>2023</strong></td>
-                            <td class="payment-cell" id="reg2023">-</td>
-                            <td class="payment-cell">-</td>
-                            <td id="paid2023">-</td>
-                            <td class="payment-cell" id="total2023Detail">-</td>
-                        </tr>
-                        <tr>
-                            <td><strong>2024</strong></td>
-                            <td class="payment-cell" id="reg2024">-</td>
-                            <td class="payment-cell" id="aid2024">-</td>
-                            <td id="paid2024">-</td>
-                            <td class="payment-cell" id="total2024Detail">-</td>
-                        </tr>
-                        <tr>
-                            <td><strong>2026</strong></td>
-                            <td class="payment-cell" id="reg2026">-</td>
-                            <td class="payment-cell" id="aid2026">-</td>
-                            <td id="paid2026">-</td>
-                            <td class="payment-cell" id="total2026Detail">-</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="year-breakdown">
+            <div class="year-section">
+                <div class="year-title">📅 2023</div>
+                <div class="payment-grid">
+                    <div class="payment-item">
+                        <div class="payment-item-label">Annual Contribution</div>
+                        <div class="payment-item-value" id="y2023-annual">-</div>
+                        <div class="payment-item-count" id="y2023-annual-count">-</div>
+                    </div>
+                    <div class="payment-item">
+                        <div class="payment-item-label">Aid Fund</div>
+                        <div class="payment-item-value" style="color: #6c757d;">N/A</div>
+                        <div class="payment-item-count">-</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="year-section">
+                <div class="year-title">📅 2024</div>
+                <div class="payment-grid">
+                    <div class="payment-item">
+                        <div class="payment-item-label">Annual Contribution</div>
+                        <div class="payment-item-value" id="y2024-annual">-</div>
+                        <div class="payment-item-count" id="y2024-annual-count">-</div>
+                    </div>
+                    <div class="payment-item">
+                        <div class="payment-item-label">Aid Fund</div>
+                        <div class="payment-item-value" id="y2024-aid">-</div>
+                        <div class="payment-item-count" id="y2024-aid-count">-</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="year-section">
+                <div class="year-title">📅 2026</div>
+                <div class="payment-grid">
+                    <div class="payment-item">
+                        <div class="payment-item-label">Annual Contribution</div>
+                        <div class="payment-item-value" id="y2026-annual">-</div>
+                        <div class="payment-item-count" id="y2026-annual-count">-</div>
+                    </div>
+                    <div class="payment-item">
+                        <div class="payment-item-label">Aid Fund</div>
+                        <div class="payment-item-value" id="y2026-aid">-</div>
+                        <div class="payment-item-count" id="y2026-aid-count">-</div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="section" style="background: #f8f9fa;">
-            <h2 class="section-title">👥 Member Registry</h2>
-            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search by name, rank, branch...">
-            
-            <!-- Desktop Table View -->
-            <div class="table-container" id="desktopView">
-                <table id="memberTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Rank</th>
-                            <th>Branch</th>
-                            <th>Region</th>
-                            <th>2023</th>
-                            <th>2024</th>
-                            <th>2026</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="memberTableBody">
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Mobile Card View -->
-            <div class="mobile-cards" id="mobileView">
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search by name, rank, branch, region...">
+        </div>
+        
+        <div class="members-section">
+            <div class="section-title">👥 Member Registry (<span id="memberCount">0</span>)</div>
+            <div id="membersList"></div>
+            <div id="noResults" class="no-results" style="display: none;">
+                No members found matching your search.
             </div>
         </div>
         
         <div class="footer">
             <p><strong>NGAM NTA'A E SIRR LÄH (NNESLÄH)</strong></p>
             <p style="margin-top: 8px;">Binka Military Professionals Group</p>
-            <p style="margin-top: 8px; font-size: 0.8em; opacity: 0.9;">Updated: <span id="lastUpdated"></span></p>
+            <p style="margin-top: 8px; opacity: 0.8;">Last Updated: <span id="lastUpdated"></span></p>
         </div>
     </div>
     
@@ -526,920 +483,1246 @@
         const data = {
   "members": [
     {
-      "id": 1,
-      "surname": "Wari",
-      "given_name": "Christian",
-      "middle_name": "Ngange",
-      "branch": "Police",
-      "rank_full": "Commissaire De Police Principal",
-      "rank_abbr": "CPP",
-      "phone": "237 6 77341454",
-      "work_region": "South",
-      "binka_quarter": "Ngwimeng",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 1100,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 2,
-      "surname": "Bawe",
-      "given_name": "Mesheline",
-      "middle_name": "Yengeh",
-      "branch": "Police",
-      "rank_full": "Inspecteur De Police De 1er Grade",
-      "rank_abbr": "IP1",
-      "phone": "237 6 53053873",
-      "work_region": "Littoral",
-      "binka_quarter": "Bomba",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 1100,
-      "a2026": 15000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 3,
-      "surname": "Tata",
-      "given_name": "George",
-      "middle_name": "Shey",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "OP1",
-      "phone": "",
-      "work_region": "Douala",
-      "binka_quarter": "Mbinkon",
-      "r2023": 1150,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 4,
-      "surname": "Tah",
-      "given_name": "Peter",
-      "middle_name": "Chin",
-      "branch": "Police",
-      "rank_full": "Gardien De La Paix Principal",
-      "rank_abbr": "GPP",
-      "phone": "237 6 70111717",
-      "work_region": "West",
-      "binka_quarter": "Nwamba",
-      "r2023": 1100,
-      "r2024": 2000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": "DUPLICATE in 2024 Reg (#13, #23)"
-    },
-    {
-      "id": 5,
-      "surname": "Nganji",
-      "given_name": "Nicodemus",
-      "middle_name": "Ngiri",
-      "branch": "Police",
-      "rank_full": "",
-      "rank_abbr": "IPP/R",
-      "phone": "",
-      "work_region": "Bafoussam",
-      "binka_quarter": "Ngwemeng-tfutfu",
-      "r2023": 1200,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 6,
-      "surname": "Ndofi",
-      "given_name": "Albert",
-      "middle_name": "",
-      "branch": "Gendarmerie",
-      "rank_full": "Lieutenant",
-      "rank_abbr": "LT",
-      "phone": "237 6 75325885",
-      "work_region": "Centre",
-      "binka_quarter": "Ngwimeng",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 1100,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": "Promoted AC\u2192LT"
-    },
-    {
-      "id": 7,
-      "surname": "Ndukong",
-      "given_name": "Julius",
-      "middle_name": "Kimbi",
-      "branch": "Navy",
-      "rank_full": "Maitre Principal",
-      "rank_abbr": "MP",
-      "phone": "1 (202) 817 4966",
-      "work_region": "Diaspora",
-      "binka_quarter": "Ngwimeng",
-      "r2023": 1500,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 8,
-      "surname": "Bakilam",
-      "given_name": "Eric",
-      "middle_name": "",
-      "branch": "Army",
-      "rank_full": "",
-      "rank_abbr": "AC",
-      "phone": "",
-      "work_region": "North West",
-      "binka_quarter": "Ngwemeng",
-      "r2023": 1150,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 9,
-      "surname": "Tabah",
-      "given_name": "Ebenezer",
-      "middle_name": "Shey",
-      "branch": "Customs",
-      "rank_full": "Adjudant",
-      "rank_abbr": "Adjt",
-      "phone": "237 6 72008710",
-      "work_region": "Littoral",
-      "binka_quarter": "Ngwimeng",
-      "r2023": 1200,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 10,
-      "surname": "Idirisu",
-      "given_name": "Yaouba",
-      "middle_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "IP2",
-      "phone": "",
-      "work_region": "Kousseri",
-      "binka_quarter": "Mbakam",
-      "r2023": 1200,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 11,
-      "surname": "Nfor",
-      "given_name": "Nformi",
-      "middle_name": "Samuel",
-      "branch": " ",
-      "rank_full": "",
-      "rank_abbr": "OP2",
-      "phone": "",
-      "work_region": "Dla-b'beri",
-      "binka_quarter": "Ngwemen-tfutfu",
-      "r2023": 1200,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 12,
-      "surname": "Juh",
-      "given_name": "Ali",
-      "middle_name": "",
-      "branch": "Gendarmerie",
-      "rank_full": "Adjudant-chef",
-      "rank_abbr": "A/C",
-      "phone": "237 6 74700137",
-      "work_region": "Far North",
-      "binka_quarter": "Bomberr",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 13,
-      "surname": "Kila",
-      "given_name": "Nestor",
-      "middle_name": "Chfubi",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "IP1",
-      "phone": "",
-      "work_region": "Centre",
-      "binka_quarter": "Ngwemeng-bonchfu",
-      "r2023": 1200,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Inactive 2024",
-      "notes": ""
-    },
-    {
-      "id": 14,
-      "surname": "Ngange",
-      "given_name": "Sunday",
-      "middle_name": "Bantar",
-      "branch": "Police",
-      "rank_full": "Officier De Police Principal",
-      "rank_abbr": "IPP",
-      "phone": "237 6 77002379",
-      "work_region": "Northwest",
-      "binka_quarter": "Chumbi",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 1100,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 15,
-      "surname": "Dimla",
-      "given_name": "Elvis",
-      "middle_name": "Ngamangong",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "SGT",
-      "phone": "",
-      "work_region": "Bertoua 12eme",
-      "binka_quarter": "Ntuntor",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 16,
-      "surname": "Ngala",
-      "given_name": "Kingsly",
-      "middle_name": "Mbisa",
-      "branch": "Gendarmerie",
-      "rank_full": "Adjudant",
-      "rank_abbr": "Adjt",
-      "phone": "237 6 675615753",
-      "work_region": "Centre",
-      "binka_quarter": "Ngwimeng",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": "Rank variation ADJT/AT"
-    },
-    {
-      "id": 17,
-      "surname": "Ngi",
-      "given_name": "Charles",
-      "middle_name": "Njonyu",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "GPX2",
-      "phone": "",
-      "work_region": "Gmi 6th District Bamenda",
-      "binka_quarter": "Mbitfu",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 18,
-      "surname": "Tambe",
-      "given_name": "Samson",
-      "middle_name": "Nganyu",
-      "branch": "Army",
-      "rank_full": "Sergent",
-      "rank_abbr": "SGT",
-      "phone": "237 6 77632156",
-      "work_region": "Adamawa",
-      "binka_quarter": "Ntontoh",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 19,
-      "surname": "Kwa",
-      "given_name": "Ernestine",
-      "middle_name": "Ncharkwi",
-      "branch": "Police",
-      "rank_full": "Gardien de la Paix Principal",
-      "rank_abbr": "GPP",
-      "phone": "237 6 75955508",
-      "work_region": "Littoral",
-      "binka_quarter": "Bomberr",
-      "r2023": 1050,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 1100,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": "GPP ERNESTINE in 2026"
-    },
-    {
-      "id": 20,
-      "surname": "Nji",
-      "given_name": "Koboh",
-      "middle_name": "Leslie",
-      "branch": "Police",
-      "rank_full": "Gardien de la Paix Principal",
-      "rank_abbr": "GPP",
-      "phone": "237 6 90929133",
-      "work_region": "Centre",
-      "binka_quarter": "Nboefi",
-      "r2023": 1000,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 1100,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 21,
-      "surname": "Adamu",
-      "given_name": "Idirisu",
-      "middle_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "GPX2",
-      "phone": "",
-      "work_region": "Santchou",
-      "binka_quarter": "Mbakam",
-      "r2023": 1100,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Inactive 2024",
-      "notes": ""
-    },
-    {
-      "id": 22,
-      "surname": "Wanda",
-      "given_name": "Nfor",
-      "middle_name": "Nelson",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "OP2",
-      "phone": "",
-      "work_region": "Centre",
-      "binka_quarter": "Ngwemeng",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 23,
-      "surname": "Tanyu",
-      "given_name": "Ndi",
-      "middle_name": "Edison",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "IP2/IPP",
-      "phone": "",
-      "work_region": "International Airport Dla",
-      "binka_quarter": "Mbinkong",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 24,
-      "surname": "Abdukarimu",
-      "given_name": "Suiabu",
-      "middle_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "SGT",
-      "phone": "",
-      "work_region": "Btap Koutaba",
-      "binka_quarter": "Mbonti",
-      "r2023": 0,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "No Payment Record",
-      "notes": ""
-    },
-    {
-      "id": 25,
-      "surname": "Kongnyu",
-      "given_name": "Ngala",
-      "middle_name": "Elvis",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "Sgt Chef",
-      "phone": "",
-      "work_region": "Rasa Edea",
-      "binka_quarter": "Ngotang",
-      "r2023": 0,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "No Payment Record",
-      "notes": ""
-    },
-    {
-      "id": 26,
-      "surname": "Kanjo",
-      "given_name": "Nfor",
-      "middle_name": "Bil-begcline",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "Gendarme",
-      "phone": "",
-      "work_region": "Dla_mboppi",
-      "binka_quarter": "Tfu-tfu Ngwemeng",
-      "r2023": 0,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "No Payment Record",
-      "notes": ""
-    },
-    {
-      "id": 27,
-      "surname": "Tanko",
-      "given_name": "Nfor",
-      "middle_name": "Emmanuel",
-      "branch": "Police",
-      "rank_full": "",
-      "rank_abbr": "OP2",
-      "phone": "",
-      "work_region": "Melong",
-      "binka_quarter": "Bonjela",
-      "r2023": 1200,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Inactive 2024",
-      "notes": ""
-    },
-    {
-      "id": 28,
-      "surname": "Samuel",
-      "given_name": "Nasseri",
-      "middle_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "Adjt",
-      "phone": "",
-      "work_region": "Bafoussam",
-      "binka_quarter": "Dingding",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": "Spelling variation"
-    },
-    {
-      "id": 29,
-      "surname": "Ngala",
-      "given_name": "Kevin",
-      "middle_name": "Ali",
-      "branch": "Marine",
-      "rank_full": "Commandant",
-      "rank_abbr": "CMDT",
-      "phone": "1 (910) 554 5916",
-      "work_region": "Diaspora",
-      "binka_quarter": "Bomberr",
-      "r2023": 1200,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 1100,
-      "a2026": 10000,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 30,
-      "surname": "Ishaga",
-      "given_name": "Idirisu",
-      "middle_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "G/M",
-      "phone": "",
-      "work_region": "Limbe",
-      "binka_quarter": "Mbakam",
-      "r2023": 1200,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Inactive 2024",
-      "notes": "Was GPX2 in dataset 1"
-    },
-    {
-      "id": 31,
-      "surname": "Ande",
-      "given_name": "Kanjo",
-      "middle_name": "Gerard",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "G/M",
-      "phone": "",
-      "work_region": "Muyuka",
-      "binka_quarter": "Ntuntoh",
-      "r2023": 1100,
-      "r2024": 1000,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Active",
-      "notes": ""
-    },
-    {
-      "id": 32,
-      "surname": "Manu",
-      "given_name": "Adamu",
-      "middle_name": "",
-      "branch": "Army",
-      "rank_full": "Sergent-chef",
-      "rank_abbr": "Sgt Chef",
-      "phone": 693118497,
-      "work_region": "Far North",
-      "binka_quarter": "Mbaka",
-      "r2023": 1200,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Inactive 2024",
-      "notes": ""
-    },
-    {
-      "id": 33,
-      "surname": "Tanyu",
-      "given_name": "Bismarck",
-      "middle_name": "Molar",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "Caporal Chef",
-      "phone": "",
-      "work_region": "Ngaoundere",
-      "binka_quarter": "Mbionwa",
-      "r2023": 1100,
-      "r2024": 2000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 7000,
-      "status": "New 2024",
-      "notes": "DUPLICATE in 2024 Reg (#16, #28)"
-    },
-    {
-      "id": 34,
-      "surname": "Clive",
-      "given_name": "Ngi",
-      "middle_name": "",
-      "branch": "",
-      "rank_full": "",
-      "rank_abbr": "EIP",
-      "phone": "",
-      "work_region": "Ciap Mutengene (student)",
-      "binka_quarter": "Mbitfu",
-      "r2023": 1100,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "Inactive 2024",
-      "notes": ""
-    },
-    {
-      "id": 35,
-      "surname": "Chifu",
-      "given_name": "Nfor",
-      "middle_name": "Awan",
-      "branch": "Army",
-      "rank_full": "Lieutenant",
-      "rank_abbr": "LT",
-      "phone": "237 6 77790075",
-      "work_region": "Northwest",
-      "binka_quarter": "Mbakah",
-      "r2023": 0,
-      "r2024": 1000,
-      "a2024": 5000,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
-      "status": "New 2024",
-      "notes": "Different from Chfubi"
-    },
-    {
       "id": "GRAND\nTOTALS:",
       "surname": "",
       "given_name": "",
       "middle_name": "",
+      "full_name": "",
       "branch": "",
       "rank_full": "",
       "rank_abbr": "",
       "phone": "",
       "work_region": "",
       "binka_quarter": "",
-      "r2023": 0,
-      "r2024": 0,
-      "a2024": 0,
-      "r2026": 0,
-      "a2026": 0,
-      "total": 0,
       "status": "",
-      "notes": ""
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 32,
+      "surname": "Manu",
+      "given_name": "Adamu",
+      "middle_name": "",
+      "full_name": "Adamu Manu",
+      "branch": "Army",
+      "rank_full": "Sergent-chef",
+      "rank_abbr": "Sgt Chef",
+      "phone": 693118497,
+      "work_region": "Far North",
+      "binka_quarter": "Mbaka",
+      "status": "Inactive 2024",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 6,
+      "surname": "Ndofi",
+      "given_name": "Albert",
+      "middle_name": "",
+      "full_name": "Albert Ndofi",
+      "branch": "Gendarmerie",
+      "rank_full": "Lieutenant",
+      "rank_abbr": "LT",
+      "phone": "237 6 75325885",
+      "work_region": "Centre",
+      "binka_quarter": "Ngwimeng",
+      "status": "Active",
+      "notes": "Promoted AC\u2192LT",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 12,
+      "surname": "Juh",
+      "given_name": "Ali",
+      "middle_name": "",
+      "full_name": "Ali Juh",
+      "branch": "Gendarmerie",
+      "rank_full": "Adjudant-chef",
+      "rank_abbr": "A/C",
+      "phone": "237 6 74700137",
+      "work_region": "Far North",
+      "binka_quarter": "Bomberr",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 33,
+      "surname": "Tanyu",
+      "given_name": "Bismarck",
+      "middle_name": "Molar",
+      "full_name": "Bismarck Molar Tanyu",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "Caporal Chef",
+      "phone": "",
+      "work_region": "Ngaoundere",
+      "binka_quarter": "Mbionwa",
+      "status": "New 2024",
+      "notes": "DUPLICATE in 2024 Reg (#16, #28)",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 2000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 17,
+      "surname": "Ngi",
+      "given_name": "Charles",
+      "middle_name": "Njonyu",
+      "full_name": "Charles Njonyu Ngi",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "GPX2",
+      "phone": "",
+      "work_region": "Gmi 6th District Bamenda",
+      "binka_quarter": "Mbitfu",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 1,
+      "surname": "Wari",
+      "given_name": "Christian",
+      "middle_name": "Ngange",
+      "full_name": "Christian Ngange Wari",
+      "branch": "Police",
+      "rank_full": "Commissaire De Police Principal",
+      "rank_abbr": "CPP",
+      "phone": "237 6 77341454",
+      "work_region": "South",
+      "binka_quarter": "Ngwimeng",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 9,
+      "surname": "Tabah",
+      "given_name": "Ebenezer",
+      "middle_name": "Shey",
+      "full_name": "Ebenezer Shey Tabah",
+      "branch": "Customs",
+      "rank_full": "Adjudant",
+      "rank_abbr": "Adjt",
+      "phone": "237 6 72008710",
+      "work_region": "Littoral",
+      "binka_quarter": "Ngwimeng",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 15,
+      "surname": "Dimla",
+      "given_name": "Elvis",
+      "middle_name": "Ngamangong",
+      "full_name": "Elvis Ngamangong Dimla",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "SGT",
+      "phone": "",
+      "work_region": "Bertoua 12eme",
+      "binka_quarter": "Ntuntor",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 8,
+      "surname": "Bakilam",
+      "given_name": "Eric",
+      "middle_name": "",
+      "full_name": "Eric Bakilam",
+      "branch": "Army",
+      "rank_full": "",
+      "rank_abbr": "AC",
+      "phone": "",
+      "work_region": "North West",
+      "binka_quarter": "Ngwemeng",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1150,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 19,
+      "surname": "Kwa",
+      "given_name": "Ernestine",
+      "middle_name": "Ncharkwi",
+      "full_name": "Ernestine Ncharkwi Kwa",
+      "branch": "Police",
+      "rank_full": "Gardien de la Paix Principal",
+      "rank_abbr": "GPP",
+      "phone": "237 6 75955508",
+      "work_region": "Littoral",
+      "binka_quarter": "Bomberr",
+      "status": "Active",
+      "notes": "GPP ERNESTINE in 2026",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1050,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 3,
+      "surname": "Tata",
+      "given_name": "George",
+      "middle_name": "Shey",
+      "full_name": "George Shey Tata",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "OP1",
+      "phone": "",
+      "work_region": "Douala",
+      "binka_quarter": "Mbinkon",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1150,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 21,
+      "surname": "Adamu",
+      "given_name": "Idirisu",
+      "middle_name": "",
+      "full_name": "Idirisu Adamu",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "GPX2",
+      "phone": "",
+      "work_region": "Santchou",
+      "binka_quarter": "Mbakam",
+      "status": "Inactive 2024",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 30,
+      "surname": "Ishaga",
+      "given_name": "Idirisu",
+      "middle_name": "",
+      "full_name": "Idirisu Ishaga",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "G/M",
+      "phone": "",
+      "work_region": "Limbe",
+      "binka_quarter": "Mbakam",
+      "status": "Inactive 2024",
+      "notes": "Was GPX2 in dataset 1",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 7,
+      "surname": "Ndukong",
+      "given_name": "Julius",
+      "middle_name": "Kimbi",
+      "full_name": "Julius Kimbi Ndukong",
+      "branch": "Navy",
+      "rank_full": "Maitre Principal",
+      "rank_abbr": "MP",
+      "phone": "1 (202) 817 4966",
+      "work_region": "Diaspora",
+      "binka_quarter": "Ngwimeng",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1500,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 31,
+      "surname": "Ande",
+      "given_name": "Kanjo",
+      "middle_name": "Gerard",
+      "full_name": "Kanjo Gerard Ande",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "G/M",
+      "phone": "",
+      "work_region": "Muyuka",
+      "binka_quarter": "Ntuntoh",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 29,
+      "surname": "Ngala",
+      "given_name": "Kevin",
+      "middle_name": "Ali",
+      "full_name": "Kevin Ali Ngala",
+      "branch": "Marine",
+      "rank_full": "Commandant",
+      "rank_abbr": "CMDT",
+      "phone": "1 (910) 554 5916",
+      "work_region": "Diaspora",
+      "binka_quarter": "Bomberr",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 16,
+      "surname": "Ngala",
+      "given_name": "Kingsly",
+      "middle_name": "Mbisa",
+      "full_name": "Kingsly Mbisa Ngala",
+      "branch": "Gendarmerie",
+      "rank_full": "Adjudant",
+      "rank_abbr": "Adjt",
+      "phone": "237 6 675615753",
+      "work_region": "Centre",
+      "binka_quarter": "Ngwimeng",
+      "status": "Active",
+      "notes": "Rank variation ADJT/AT",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 20,
+      "surname": "Nji",
+      "given_name": "Koboh",
+      "middle_name": "Leslie",
+      "full_name": "Koboh Leslie Nji",
+      "branch": "Police",
+      "rank_full": "Gardien de la Paix Principal",
+      "rank_abbr": "GPP",
+      "phone": "237 6 90929133",
+      "work_region": "Centre",
+      "binka_quarter": "Nboefi",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 2,
+      "surname": "Bawe",
+      "given_name": "Mesheline",
+      "middle_name": "Yengeh",
+      "full_name": "Mesheline Yengeh Bawe",
+      "branch": "Police",
+      "rank_full": "Inspecteur De Police De 1er Grade",
+      "rank_abbr": "IP1",
+      "phone": "237 6 53053873",
+      "work_region": "Littoral",
+      "binka_quarter": "Bomba",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": 15000
+        }
+      }
+    },
+    {
+      "id": 28,
+      "surname": "Samuel",
+      "given_name": "Nasseri",
+      "middle_name": "",
+      "full_name": "Nasseri Samuel",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "Adjt",
+      "phone": "",
+      "work_region": "Bafoussam",
+      "binka_quarter": "Dingding",
+      "status": "Active",
+      "notes": "Spelling variation",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 23,
+      "surname": "Tanyu",
+      "given_name": "Ndi",
+      "middle_name": "Edison",
+      "full_name": "Ndi Edison Tanyu",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "IP2/IPP",
+      "phone": "",
+      "work_region": "International Airport Dla",
+      "binka_quarter": "Mbinkong",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 13,
+      "surname": "Kila",
+      "given_name": "Nestor",
+      "middle_name": "Chfubi",
+      "full_name": "Nestor Chfubi Kila",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "IP1",
+      "phone": "",
+      "work_region": "Centre",
+      "binka_quarter": "Ngwemeng-bonchfu",
+      "status": "Inactive 2024",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 35,
+      "surname": "Chifu",
+      "given_name": "Nfor",
+      "middle_name": "Awan",
+      "full_name": "Nfor Awan Chifu",
+      "branch": "Army",
+      "rank_full": "Lieutenant",
+      "rank_abbr": "LT",
+      "phone": "237 6 77790075",
+      "work_region": "Northwest",
+      "binka_quarter": "Mbakah",
+      "status": "New 2024",
+      "notes": "Different from Chfubi",
+      "payments": {
+        "2023": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 26,
+      "surname": "Kanjo",
+      "given_name": "Nfor",
+      "middle_name": "Bil-begcline",
+      "full_name": "Nfor Bil-begcline Kanjo",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "Gendarme",
+      "phone": "",
+      "work_region": "Dla_mboppi",
+      "binka_quarter": "Tfu-tfu Ngwemeng",
+      "status": "No Payment Record",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 27,
+      "surname": "Tanko",
+      "given_name": "Nfor",
+      "middle_name": "Emmanuel",
+      "full_name": "Nfor Emmanuel Tanko",
+      "branch": "Police",
+      "rank_full": "",
+      "rank_abbr": "OP2",
+      "phone": "",
+      "work_region": "Melong",
+      "binka_quarter": "Bonjela",
+      "status": "Inactive 2024",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 22,
+      "surname": "Wanda",
+      "given_name": "Nfor",
+      "middle_name": "Nelson",
+      "full_name": "Nfor Nelson Wanda",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "OP2",
+      "phone": "",
+      "work_region": "Centre",
+      "binka_quarter": "Ngwemeng",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 11,
+      "surname": "Nfor",
+      "given_name": "Nformi",
+      "middle_name": "Samuel",
+      "full_name": "Nformi Samuel Nfor",
+      "branch": " ",
+      "rank_full": "",
+      "rank_abbr": "OP2",
+      "phone": "",
+      "work_region": "Dla-b'beri",
+      "binka_quarter": "Ngwemen-tfutfu",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 25,
+      "surname": "Kongnyu",
+      "given_name": "Ngala",
+      "middle_name": "Elvis",
+      "full_name": "Ngala Elvis Kongnyu",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "Sgt Chef",
+      "phone": "",
+      "work_region": "Rasa Edea",
+      "binka_quarter": "Ngotang",
+      "status": "No Payment Record",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 34,
+      "surname": "Clive",
+      "given_name": "Ngi",
+      "middle_name": "",
+      "full_name": "Ngi Clive",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "EIP",
+      "phone": "",
+      "work_region": "Ciap Mutengene (student)",
+      "binka_quarter": "Mbitfu",
+      "status": "Inactive 2024",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 5,
+      "surname": "Nganji",
+      "given_name": "Nicodemus",
+      "middle_name": "Ngiri",
+      "full_name": "Nicodemus Ngiri Nganji",
+      "branch": "Police",
+      "rank_full": "",
+      "rank_abbr": "IPP/R",
+      "phone": "",
+      "work_region": "Bafoussam",
+      "binka_quarter": "Ngwemeng-tfutfu",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 4,
+      "surname": "Tah",
+      "given_name": "Peter",
+      "middle_name": "Chin",
+      "full_name": "Peter Chin Tah",
+      "branch": "Police",
+      "rank_full": "Gardien De La Paix Principal",
+      "rank_abbr": "GPP",
+      "phone": "237 6 70111717",
+      "work_region": "West",
+      "binka_quarter": "Nwamba",
+      "status": "Active",
+      "notes": "DUPLICATE in 2024 Reg (#13, #23)",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 2000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 18,
+      "surname": "Tambe",
+      "given_name": "Samson",
+      "middle_name": "Nganyu",
+      "full_name": "Samson Nganyu Tambe",
+      "branch": "Army",
+      "rank_full": "Sergent",
+      "rank_abbr": "SGT",
+      "phone": "237 6 77632156",
+      "work_region": "Adamawa",
+      "binka_quarter": "Ntontoh",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 24,
+      "surname": "Abdukarimu",
+      "given_name": "Suiabu",
+      "middle_name": "",
+      "full_name": "Suiabu Abdukarimu",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "SGT",
+      "phone": "",
+      "work_region": "Btap Koutaba",
+      "binka_quarter": "Mbonti",
+      "status": "No Payment Record",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": null,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
+    },
+    {
+      "id": 14,
+      "surname": "Ngange",
+      "given_name": "Sunday",
+      "middle_name": "Bantar",
+      "full_name": "Sunday Bantar Ngange",
+      "branch": "Police",
+      "rank_full": "Officier De Police Principal",
+      "rank_abbr": "IPP",
+      "phone": "237 6 77002379",
+      "work_region": "Northwest",
+      "binka_quarter": "Chumbi",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1100,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": 5000
+        },
+        "2026": {
+          "annual_contribution": 1100,
+          "aid_fund": 10000
+        }
+      }
+    },
+    {
+      "id": 10,
+      "surname": "Idirisu",
+      "given_name": "Yaouba",
+      "middle_name": "",
+      "full_name": "Yaouba Idirisu",
+      "branch": "",
+      "rank_full": "",
+      "rank_abbr": "IP2",
+      "phone": "",
+      "work_region": "Kousseri",
+      "binka_quarter": "Mbakam",
+      "status": "Active",
+      "notes": "",
+      "payments": {
+        "2023": {
+          "annual_contribution": 1200,
+          "aid_fund": null
+        },
+        "2024": {
+          "annual_contribution": 1000,
+          "aid_fund": null
+        },
+        "2026": {
+          "annual_contribution": null,
+          "aid_fund": null
+        }
+      }
     }
   ],
   "summary": {
     "total_members": 36,
     "active_count": 24,
     "inactive_count": 6,
-    "new_count": 2,
-    "total_2023": 35350,
-    "total_2024_reg": 28000,
-    "total_2024_aid": 90000,
-    "total_2026_reg": 7700,
-    "total_2026_aid": 105000,
-    "grand_total": 266050,
-    "branches": {
-      "Police": 8,
-      "Gendarmerie": 3,
-      "Navy": 1,
-      "Army": 4,
-      "Customs": 1,
-      " ": 1,
-      "Marine": 1
+    "totals": {
+      "2023": {
+        "annual_contribution": 35350,
+        "aid_fund": 0
+      },
+      "2024": {
+        "annual_contribution": 28000,
+        "aid_fund": 90000
+      },
+      "2026": {
+        "annual_contribution": 7700,
+        "aid_fund": 105000
+      }
     },
-    "paid_2023": 31,
-    "paid_2024_reg": 26,
-    "paid_2024_aid": 18,
-    "paid_2026_reg": 7,
-    "paid_2026_aid": 10
+    "participation": {
+      "2023": {
+        "annual_contribution": 31,
+        "aid_fund": 0
+      },
+      "2024": {
+        "annual_contribution": 26,
+        "aid_fund": 18
+      },
+      "2026": {
+        "annual_contribution": 7,
+        "aid_fund": 10
+      }
+    }
   }
 };
         
         function formatCurrency(amount) {
-            if (amount === 0) return '-';
-            return new Intl.NumberFormat('en-US').format(Math.round(amount));
-        }
-        
-        function formatCurrencyFull(amount) {
-            return formatCurrency(amount) + ' FCFA';
+            if (!amount) return '-';
+            return new Intl.NumberFormat('en-US').format(Math.round(amount)) + ' FCFA';
         }
         
         function getBranchBadge(branch) {
-            if (!branch || branch.trim() === '') return '<span class="branch-badge">N/A</span>';
-            const badgeClass = `badge-${branch.toLowerCase().trim()}`;
+            if (!branch) return '<span class="branch-badge" style="background: #6c757d;">Unknown</span>';
+            const badgeClass = `badge-${branch.toLowerCase()}`;
             return `<span class="branch-badge ${badgeClass}">${branch}</span>`;
         }
         
-        function renderDashboard() {
+        function getStatusBadge(status) {
+            if (!status) return '<span class="status-badge status-inactive">Unknown</span>';
+            const isActive = status.includes('Active');
+            const badgeClass = isActive ? 'status-active' : 'status-inactive';
+            return `<span class="status-badge ${badgeClass}">${status}</span>`;
+        }
+        
+        function renderSummary() {
             const summary = data.summary;
             
+            // Update member counts
             document.getElementById('totalMembers').textContent = summary.total_members;
             document.getElementById('activeMembers').textContent = summary.active_count;
+            document.getElementById('inactiveMembers').textContent = summary.inactive_count;
             
-            const grandTotal = summary.total_2023 + summary.total_2024_reg + summary.total_2024_aid + 
-                             summary.total_2026_reg + summary.total_2026_aid;
+            // Calculate grand total
+            let grandTotal = 0;
+            for (const year in summary.totals) {
+                grandTotal += summary.totals[year].annual_contribution || 0;
+                grandTotal += summary.totals[year].aid_fund || 0;
+            }
             document.getElementById('grandTotal').textContent = formatCurrency(grandTotal);
             
-            document.getElementById('total2023').textContent = formatCurrency(summary.total_2023);
-            document.getElementById('total2024').textContent = formatCurrency(summary.total_2024_reg + summary.total_2024_aid);
-            document.getElementById('total2026').textContent = formatCurrency(summary.total_2026_reg + summary.total_2026_aid);
+            // Update year breakdowns - keeping them SEPARATE
+            document.getElementById('y2023-annual').textContent = formatCurrency(summary.totals['2023'].annual_contribution);
+            document.getElementById('y2023-annual-count').textContent = `${summary.participation['2023'].annual_contribution} members`;
             
-            document.getElementById('reg2023').textContent = formatCurrency(summary.total_2023);
-            document.getElementById('reg2024').textContent = formatCurrency(summary.total_2024_reg);
-            document.getElementById('aid2024').textContent = formatCurrency(summary.total_2024_aid);
-            document.getElementById('reg2026').textContent = formatCurrency(summary.total_2026_reg);
-            document.getElementById('aid2026').textContent = formatCurrency(summary.total_2026_aid);
+            document.getElementById('y2024-annual').textContent = formatCurrency(summary.totals['2024'].annual_contribution);
+            document.getElementById('y2024-annual-count').textContent = `${summary.participation['2024'].annual_contribution} members`;
+            document.getElementById('y2024-aid').textContent = formatCurrency(summary.totals['2024'].aid_fund);
+            document.getElementById('y2024-aid-count').textContent = `${summary.participation['2024'].aid_fund} members`;
             
-            document.getElementById('paid2023').textContent = `${summary.paid_2023}`;
-            document.getElementById('paid2024').textContent = `${summary.paid_2024_reg}/${summary.paid_2024_aid}`;
-            document.getElementById('paid2026').textContent = `${summary.paid_2026_reg}/${summary.paid_2026_aid}`;
+            document.getElementById('y2026-annual').textContent = formatCurrency(summary.totals['2026'].annual_contribution);
+            document.getElementById('y2026-annual-count').textContent = `${summary.participation['2026'].annual_contribution} members`;
+            document.getElementById('y2026-aid').textContent = formatCurrency(summary.totals['2026'].aid_fund);
+            document.getElementById('y2026-aid-count').textContent = `${summary.participation['2026'].aid_fund} members`;
             
-            document.getElementById('total2023Detail').textContent = formatCurrency(summary.total_2023);
-            document.getElementById('total2024Detail').textContent = formatCurrency(summary.total_2024_reg + summary.total_2024_aid);
-            document.getElementById('total2026Detail').textContent = formatCurrency(summary.total_2026_reg + summary.total_2026_aid);
-            
+            // Set last updated
             document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
-                month: 'short',
+                month: 'long',
                 day: 'numeric'
             });
+        }
+        
+        function renderMemberCard(member) {
+            const rankDisplay = member.rank_full && member.rank_abbr 
+                ? `${member.rank_full} (${member.rank_abbr})`
+                : member.rank_full || member.rank_abbr || '-';
             
-            renderMembers(data.members);
+            // Build payment years section - TWO SEPARATE CATEGORIES
+            let paymentsHTML = '';
+            const years = ['2023', '2024', '2026'];
+            
+            for (const year of years) {
+                const payments = member.payments[year];
+                const annual = payments.annual_contribution;
+                const aid = payments.aid_fund;
+                
+                paymentsHTML += `
+                    <div class="payment-year">
+                        <div class="payment-year-title">${year}</div>
+                        <div class="payment-row">
+                            <div class="payment-cell">
+                                <div class="payment-cell-label">Annual Contribution</div>
+                                <div class="payment-cell-value ${annual ? 'payment-yes' : 'payment-no'}">
+                                    ${annual ? formatCurrency(annual) : '-'}
+                                </div>
+                            </div>
+                            <div class="payment-cell">
+                                <div class="payment-cell-label">Aid Fund</div>
+                                <div class="payment-cell-value ${aid ? 'payment-yes' : 'payment-no'}">
+                                    ${aid ? formatCurrency(aid) : '-'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="member-card" data-search="${member.full_name.toLowerCase()} ${member.rank_abbr.toLowerCase()} ${member.branch.toLowerCase()} ${member.work_region.toLowerCase()}">
+                    <div class="member-header">
+                        <div class="member-name">${member.full_name}</div>
+                        <div class="member-rank">${rankDisplay}</div>
+                    </div>
+                    
+                    <div class="member-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Branch:</span>
+                            <span class="detail-value">${getBranchBadge(member.branch)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Region:</span>
+                            <span class="detail-value">${member.work_region || '-'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Village Quarter:</span>
+                            <span class="detail-value">${member.binka_quarter || '-'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value">${getStatusBadge(member.status)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="payments-section">
+                        <div class="payments-title">💰 Payments by Year</div>
+                        ${paymentsHTML}
+                    </div>
+                </div>
+            `;
         }
         
         function renderMembers(members) {
-            renderDesktopTable(members);
-            renderMobileCards(members);
-        }
-        
-        function renderDesktopTable(members) {
-            const tbody = document.getElementById('memberTableBody');
-            tbody.innerHTML = '';
+            const membersList = document.getElementById('membersList');
+            const noResults = document.getElementById('noResults');
             
-            members.forEach(member => {
-                const fullName = `${member.given_name} ${member.middle_name} ${member.surname}`.trim().replace(/\s+/g, ' ');
-                const statusClass = member.status.includes('Active') ? 'status-active' : 'status-inactive';
-                const total2024 = member.r2024 + member.a2024;
-                const total2026 = member.r2026 + member.a2026;
-                const memberTotal = member.r2023 + total2024 + total2026;
-                
-                const row = `
-                    <tr>
-                        <td>${member.id}</td>
-                        <td><strong>${fullName}</strong></td>
-                        <td>${member.rank_abbr}</td>
-                        <td>${getBranchBadge(member.branch)}</td>
-                        <td>${member.work_region}</td>
-                        <td class="payment-cell ${member.r2023 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(member.r2023)}</td>
-                        <td class="payment-cell ${total2024 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2024)}</td>
-                        <td class="payment-cell ${total2026 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2026)}</td>
-                        <td class="payment-cell"><strong>${formatCurrency(memberTotal)}</strong></td>
-                        <td class="${statusClass}">${member.status}</td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-        }
-        
-        function renderMobileCards(members) {
-            const container = document.getElementById('mobileView');
-            container.innerHTML = '';
+            if (members.length === 0) {
+                membersList.innerHTML = '';
+                noResults.style.display = 'block';
+                document.getElementById('memberCount').textContent = '0';
+                return;
+            }
             
-            members.forEach(member => {
-                const fullName = `${member.given_name} ${member.middle_name} ${member.surname}`.trim().replace(/\s+/g, ' ');
-                const statusClass = member.status.includes('Active') ? 'status-active' : 'status-inactive';
-                const total2024 = member.r2024 + member.a2024;
-                const total2026 = member.r2026 + member.a2026;
-                const memberTotal = member.r2023 + total2024 + total2026;
-                
-                const card = document.createElement('div');
-                card.className = 'member-card';
-                card.innerHTML = `
-                    <div class="member-card-header">
-                        <div class="member-name">${fullName}</div>
-                        <div class="member-id">#${member.id}</div>
-                    </div>
-                    
-                    <div class="member-info">
-                        <div class="info-row">
-                            <span class="info-label">Rank:</span>
-                            <span class="info-value">${member.rank_abbr}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Branch:</span>
-                            <span class="info-value">${getBranchBadge(member.branch)}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Region:</span>
-                            <span class="info-value">${member.work_region}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Village:</span>
-                            <span class="info-value">${member.binka_quarter}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Status:</span>
-                            <span class="info-value ${statusClass}">${member.status}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="payments-grid">
-                        <div class="payment-item">
-                            <div class="payment-year">2023</div>
-                            <div class="payment-amount ${member.r2023 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(member.r2023)}</div>
-                        </div>
-                        <div class="payment-item">
-                            <div class="payment-year">2024</div>
-                            <div class="payment-amount ${total2024 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2024)}</div>
-                        </div>
-                        <div class="payment-item">
-                            <div class="payment-year">2026</div>
-                            <div class="payment-amount ${total2026 > 0 ? 'payment-yes' : 'payment-no'}">${formatCurrency(total2026)}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-row" style="margin-top: 12px; padding-top: 12px; border-top: 2px solid #f0f0f0;">
-                        <span class="info-label" style="font-weight: 700; color: #2a5298;">TOTAL:</span>
-                        <span class="info-value" style="font-size: 1.1em; font-weight: 700; color: #2a5298;">${formatCurrency(memberTotal)} FCFA</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+            noResults.style.display = 'none';
+            membersList.innerHTML = members.map(m => renderMemberCard(m)).join('');
+            document.getElementById('memberCount').textContent = members.length;
         }
         
+        // Search functionality
         document.getElementById('searchBox').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderMembers(data.members);
+                return;
+            }
+            
             const filteredMembers = data.members.filter(member => {
-                const fullName = `${member.given_name} ${member.middle_name} ${member.surname}`.toLowerCase();
-                return fullName.includes(searchTerm) ||
-                       member.rank_abbr.toLowerCase().includes(searchTerm) ||
-                       member.branch.toLowerCase().includes(searchTerm) ||
-                       member.work_region.toLowerCase().includes(searchTerm) ||
-                       member.binka_quarter.toLowerCase().includes(searchTerm);
+                const searchText = `${member.full_name} ${member.rank_abbr} ${member.branch} ${member.work_region} ${member.binka_quarter}`.toLowerCase();
+                return searchText.includes(searchTerm);
             });
+            
             renderMembers(filteredMembers);
         });
         
-        renderDashboard();
+        // Initialize
+        renderSummary();
+        renderMembers(data.members);
     </script>
 </body>
 </html>
