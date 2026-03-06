@@ -586,11 +586,28 @@
         </div>
         <div class="dashboard-title">Financial Dashboard</div>
         <div class="club-description">
-            Binka Military Professionals Group - Uniting military and law enforcement professionals from Binka, Northwest Province, Cameroon
+            Binka Armed Forces Professionals Group - Uniting military and law enforcement professionals from Binka, Northwest Province, Cameroon
         </div>
         <div class="club-motto">
             "BO'O NGAM NTA'A E SIRR LÀH KI BIMI Nkerbu KÀH"
         </div>
+    
+    <!-- MEMBER RECORDS NOTICE BANNER -->
+    <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); 
+                margin: 12px; 
+                padding: 12px 15px; 
+                border-radius: 8px; 
+                border-left: 4px solid #ffc107;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                text-align: center;">
+        <div style="font-weight: 700; color: #856404; font-size: 0.95em; margin-bottom: 4px;">
+            📋 Member Contribution Records
+        </div>
+        <div style="font-size: 0.85em; color: #856404; line-height: 1.4;">
+            Member-by-member contribution records (all 35) are listed below. Scroll down to view individual details.
+        </div>
+    </div>
+
     </div>
     
     <!-- FINANCIAL HIGHLIGHTS -->
@@ -600,7 +617,7 @@
         <div class="highlight-grid">
             <div class="highlight-item">
                 <span class="highlight-label">1. Total Members</span>
-                <span class="highlight-value">35</span>
+                <span class="highlight-value"><strong style="font-size: 1.5em;">35</strong></span>
             </div>
             
             <div class="highlight-item success">
@@ -615,12 +632,12 @@
             
             <div class="highlight-item" style="padding-left: 30px; border-left: 3px solid #6c757d;">
                 <span class="highlight-label">• To Treasurer</span>
-                <span class="highlight-value">153,000 FCFA</span>
+                <span class="highlight-value"><strong style="font-size: 1.5em;">153,000 FCFA</strong></span>
             </div>
             
             <div class="highlight-item" style="padding-left: 30px; border-left: 3px solid #6c757d;">
                 <span class="highlight-label">• Aid Disbursed</span>
-                <span class="highlight-value">40,000 FCFA</span>
+                <span class="highlight-value"><strong style="font-size: 1.5em;">40,000 FCFA</strong></span>
             </div>
             
             <div class="highlight-item warning">
@@ -2016,25 +2033,45 @@
         
         function renderCharts() {
             const totals = data.totals;
+            
+            // Aid Fund calculation: expected vs actual
+            const totalMembers = data.total_members;
+            const expectedAidPerMember = 15000;
+            const expectedAidTotal = totalMembers * expectedAidPerMember; // 525,000 FCFA
+            
+            // For Aid, calculate percentage against expected total, not max amount
+            const aidPercentage = (totals.aid_combined / expectedAidTotal) * 100;
+            
             const maxAmount = Math.max(
                 totals.reg_2023, totals.reg_2024, 
                 totals.reg_2025, totals.reg_2026, 
-                totals.aid_combined
+                expectedAidTotal // Use expected total for Aid
             );
             
             const charts = [
-                { label: '2023 Registration', amount: totals.reg_2023, isAid: false },
-                { label: '2024 Registration', amount: totals.reg_2024, isAid: false },
-                { label: '2025 Registration', amount: totals.reg_2025, isAid: false },
-                { label: '2026 Registration', amount: totals.reg_2026, isAid: false },
-                { label: 'Aid (A)', amount: totals.aid_combined, isAid: true }
+                { label: '2023 Registration', amount: totals.reg_2023, isAid: false, percentage: null },
+                { label: '2024 Registration', amount: totals.reg_2024, isAid: false, percentage: null },
+                { label: '2025 Registration', amount: totals.reg_2025, isAid: false, percentage: null },
+                { label: '2026 Registration', amount: totals.reg_2026, isAid: false, percentage: null },
+                { label: 'Aid Fund', amount: totals.aid_combined, isAid: true, percentage: aidPercentage, expectedTotal: expectedAidTotal }
             ];
             
             const container = document.getElementById('chartContainer');
             container.innerHTML = '';
             
             charts.forEach(chart => {
-                const percentage = (chart.amount / maxAmount) * 100;
+                let percentage;
+                let displayText;
+                
+                if (chart.isAid) {
+                    // Aid Fund: show percentage of expected total
+                    percentage = chart.percentage;
+                    displayText = `${Math.round(percentage)}% of ${formatCurrency(chart.expectedTotal)} target`;
+                } else {
+                    // Registration: show percentage of max amount
+                    percentage = (chart.amount / maxAmount) * 100;
+                    displayText = `${Math.round(percentage)}%`;
+                }
                 
                 const html = `
                     <div class="chart-item">
@@ -2044,7 +2081,7 @@
                         </div>
                         <div class="chart-bar-bg">
                             <div class="chart-bar ${chart.isAid ? 'aid' : ''}" style="width: ${percentage}%">
-                                ${Math.round(percentage)}%
+                                ${displayText}
                             </div>
                         </div>
                     </div>
