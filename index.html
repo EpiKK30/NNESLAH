@@ -84,12 +84,12 @@
             margin-bottom: 8px;
         }
         .contact-link {
-            display: block;
-            margin: 6px 0;
+            display: inline;
+            margin: 0;
             color: #0066cc;
             text-decoration: none;
             font-weight: 600;
-            word-break: break-all;
+            word-break: normal;
         }
         .contact-link:hover {
             text-decoration: underline;
@@ -125,7 +125,7 @@
         }
         .highlights-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-top: 15px;
         }
@@ -432,8 +432,16 @@
                 
                 <div class="contact-links">
                     <div class="contact-links-title">📞 NNESLAH Contact Information:</div>
-                    <a href="https://forms.gle/tCX8vBm72tES3Vgu7" class="contact-link" target="_blank">1.📝 NNESLAH Contact Form: https://forms.gle/tCX8vBm72tES3Vgu7</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1lBFK7yzonuoyjLwruZs6lrJV0yp_6lFHaMpiO0l6Vzo/edit?usp=sharing" class="contact-link" target="_blank">2.📊 NNESLAH Master Roster: View Spreadsheet</a>
+                    <div style="margin-top: 8px;">
+                        <p style="margin: 0 0 8px 0; line-height: 1.6;">
+                            <strong style="display: inline;">1️⃣ 📋 <a href="https://forms.gle/tCX8vBm72tES3Vgu7" class="contact-link" target="_blank" style="text-decoration: underline; display: inline;">Click here to access the NNESLAH Contact Form</a></strong>
+                            <br><span style="font-size: 0.85em; color: #333; margin-left: 30px;">Use this form to update or submit your contact information so that your details in the forum records remain accurate.</span>
+                        </p>
+                        <p style="margin: 0; line-height: 1.6;">
+                            <strong style="display: inline;">2️⃣ 📊 <a href="https://docs.google.com/spreadsheets/d/1lBFK7yzonuoyjLwruZs6lrJV0yp_6lFHaMpiO0l6Vzo/edit?usp=sharing" class="contact-link" target="_blank" style="text-decoration: underline; display: inline;">Click here to view the NNESLAH Master Roster</a></strong>
+                            <br><span style="font-size: 0.85em; color: #333; margin-left: 30px;">This spreadsheet contains the complete membership roster, including members' contact information and contribution records. Use it to confirm or review your information.</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -446,7 +454,7 @@
                     <div class="highlight-value" id="totalMembers">--</div>
                 </div>
                 <div class="highlight-card">
-                    <div class="highlight-label">Aid Collected</div>
+                    <div class="highlight-label">Aid Fund Collected</div>
                     <div class="highlight-value" id="aidCollected">--</div>
                 </div>
                 <div class="highlight-card">
@@ -454,12 +462,8 @@
                     <div class="highlight-value" id="regCollected">--</div>
                 </div>
                 <div class="highlight-card orange">
-                    <div class="highlight-label">Funds from Last Year</div>
+                    <div class="highlight-label">Funds Carried Over from Last Year</div>
                     <div class="highlight-value" id="fundsLastYear">--</div>
-                </div>
-                <div class="highlight-card green">
-                    <div class="highlight-label">Total in Coffers</div>
-                    <div class="highlight-value" id="totalCoffers">--</div>
                 </div>
             </div>
         </div>
@@ -556,13 +560,12 @@
   "summary": {
     "total_members": 35,
     "total_aid_collected": 120000,
-    "expected_aid_total": 435000,
+    "expected_aid_total": 325000,
     "total_reg_collected": 9000,
     "expected_reg_total": 35000,
-    "funds_carried_over_from_last_year": 123000,
-    "total_in_coffers": 252000,
-    "aid_compliance_pct": 38,
-    "reg_compliance_pct": 25,
+    "funds_from_last_year": 123000,
+    "aid_compliance_pct": 36.9,
+    "reg_compliance_pct": 25.7,
     "compliant_count": 6,
     "non_compliant_count": 29
   },
@@ -1310,7 +1313,6 @@
             document.getElementById('aidCollected').textContent = formatCurrency(data.summary.total_aid_collected);
             document.getElementById('regCollected').textContent = formatCurrency(data.summary.total_reg_collected);
             document.getElementById('fundsLastYear').textContent = formatCurrency(data.summary.funds_from_last_year);
-            document.getElementById('totalCoffers').textContent = formatCurrency(data.summary.total_in_coffers);
 
             const aidPct = data.summary.aid_compliance_pct;
             document.getElementById('aidAmount').textContent = formatCurrency(data.summary.total_aid_collected);
